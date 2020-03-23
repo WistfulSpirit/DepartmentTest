@@ -88,7 +88,7 @@ namespace Departments.Controllers
                 com.Parameters.AddWithValue("@FirstName", employee.FirstName);
                 com.Parameters.AddWithValue("@SurName", employee.SurName);
                 com.Parameters.AddWithValue("@Patronymic", employee.Patronymic);
-                com.Parameters.AddWithValue("@DateOfBirth", employee.DateOfBirth);
+                com.Parameters.AddWithValue("@DateOfBirth", employee.DateOfBirth.Date);
                 com.Parameters.AddWithValue("@DocSeries", employee.DocSeries);
                 com.Parameters.AddWithValue("@DocNumber", employee.DocNumber);
                 com.Parameters.AddWithValue("@Position", employee.Position);
@@ -113,7 +113,7 @@ namespace Departments.Controllers
                 com.Parameters.AddWithValue("@FirstName", employee.FirstName);
                 com.Parameters.AddWithValue("@SurName", employee.SurName);
                 com.Parameters.AddWithValue("@Patronymic", employee.Patronymic);
-                com.Parameters.AddWithValue("@DateOfBirth", employee.DateOfBirth);
+                com.Parameters.AddWithValue("@DateOfBirth", employee.DateOfBirth.Date);
                 com.Parameters.AddWithValue("@DocSeries", employee.DocSeries);
                 com.Parameters.AddWithValue("@DocNumber", employee.DocNumber);
                 com.Parameters.AddWithValue("@Position", employee.Position);
