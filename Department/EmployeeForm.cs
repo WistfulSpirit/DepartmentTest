@@ -90,11 +90,6 @@ namespace Departments
                 errorProvider1.SetError(textBoxSurName, "Поле не должно быть пустым или превышать 50 символов");
                 valid = false;
             }
-            if (String.IsNullOrWhiteSpace(textBoxPatronymic.Text) || textBoxPatronymic.Text.Length > 50)
-            {
-                errorProvider1.SetError(textBoxPatronymic, "Поле не должно быть пустым или превышать 50 символов");
-                valid = false;
-            }
             if (String.IsNullOrWhiteSpace(textBoxDocSeries.Text) || textBoxDocSeries.Text.Length > 4)
             {
                 errorProvider1.SetError(textBoxDocSeries, "Поле не должно быть пустым или превышать 4 символов");

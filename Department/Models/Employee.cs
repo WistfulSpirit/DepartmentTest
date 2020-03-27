@@ -18,6 +18,9 @@ namespace Departments.Models
         public string SurName { get; set; }
         [DisplayName("Отчество")]
         public string Patronymic { get; set; }
+        [DisplayName("Возраст")]
+        public int Age { get; set; }
+
         [DisplayName("Дата рождения")]
         public DateTime DateOfBirth { get; set; }
         [DisplayName("Серия документов")]

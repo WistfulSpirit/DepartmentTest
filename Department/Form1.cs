@@ -106,7 +106,7 @@ namespace Departments
             if (node == null)
                 return;
             Data.department = (Department)treeViewDeps.SelectedNode.Tag;
-            Data.departmentsList = departmentController.GetDepartments();
+            Data.departmentsList = departmentController.GetDepartmentsWC(Data.department.ID);
             DepartmentForm depForm = new DepartmentForm();
             if (depForm.ShowDialog() == DialogResult.OK)
             {
@@ -169,8 +169,8 @@ namespace Departments
             if (empForm.ShowDialog() == DialogResult.OK)
             {
                 employeeController.Create(Data.employee);
+                UpdateDataGrid(Data.employee.DepartmentID);
             }
-            UpdateDataGrid(Data.employee.DepartmentID);
             Data.employee = null;
         }
 

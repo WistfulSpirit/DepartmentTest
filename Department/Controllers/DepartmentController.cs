@@ -73,6 +73,42 @@ namespace Departments.Controllers
             return depList;
         }
 
+        public List<Department> GetDepartmentsWC(Guid? ParentDepartmentID)
+        {
+            var depList = new List<Department>();
+            string paramVal = ParentDepartmentID == null ? "is NULL" : " = '" + ParentDepartmentID.Value.ToString() + "'";
+
+            string command =
+                 "with depid(id) as (" +
+                 "SELECT d.ID FROM Department as d " +
+                $"WHERE ParentDepartmentID {paramVal} " +
+                 "UNION ALL " +
+                 "SELECT d.ID FROM Department as d " +
+                 "INNER JOIN depid dp ON d.ParentDepartmentID = dp.id) " +
+                 "SELECT* FROM Department " +
+                 "where Department.ID Not in (select * from depid )";
+
+            using (var com = new SqlCommand(command, connection))
+            {
+                connection.Open();
+                var reader = com.ExecuteReader();
+                while (reader.Read())
+                {
+                    var d = new Department();
+                    d.ID = (Guid)reader["ID"];
+                    d.Name = (string)reader["Name"];
+                    d.Code = (string)reader["Code"];
+                    if (reader["ParentDepartmentID"] == DBNull.Value)
+                        d.ParentDepartmentID = null;
+                    else
+                        d.ParentDepartmentID = (Guid)reader["ParentDepartmentID"];
+                    depList.Add(d);
+                }
+                connection.Close();
+            }
+            return depList;
+        }
+
         public int Create(Department department)
         {
             string command = "INSERT INTO Department (ID, Name, Code, ParentDepartmentID) VALUES (@id, @name,@code,@pdID)";
@@ -91,7 +127,38 @@ namespace Departments.Controllers
                 return result;
             }
         }
+        /*
+with depid (id, parentid) as (
+SELECT d.ID, d.ParentDepartmentID FROM Department as d
+WHERE ParentDepartmentID IS NULL
 
+UNION ALL 
+
+SELECT d.ID, d.ParentDepartmentID  FROM Department as d
+INNER JOIN depid dp ON d.ParentDepartmentID = dp.id
+)
+
+select * from depid 
+
+
+
+            with depid (id) as (
+SELECT d.ID FROM Department as d
+WHERE ParentDepartmentID IS NULL
+
+UNION ALL 
+
+SELECT d.ID FROM Department as d
+INNER JOIN depid dp ON d.ParentDepartmentID = dp.id
+)
+
+SELECT * FROM Department 
+where Department.ID Not in (
+
+select * from depid )
+
+
+             */
         public int Update(Department department)
         {
             string command = "update Department " +

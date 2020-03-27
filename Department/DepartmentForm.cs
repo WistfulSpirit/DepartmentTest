@@ -30,7 +30,9 @@ namespace Departments
             comboBoxParentDepartment.DataSource = depList;// depList.OrderBy(x => x.ID).ToList(); 
             if (Data.department != null)
             {
-                depList.Remove(depList.Where(x => x.ID == Data.department.ID).First());
+                int c = depList.Where(x => x.ID == Data.department.ID).Count();
+                if (c > 0)
+                    depList.Remove(depList.Where(x => x.ID == Data.department.ID).First());
                 textBoxName.Text = Data.department.Name;
                 textBoxCode.Text = Data.department.Code;
                 //comboBoxParentDepartment.DataSource = depList;// depList.OrderBy(x => x.ID).ToList(); 
